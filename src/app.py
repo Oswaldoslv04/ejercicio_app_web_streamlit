@@ -14,9 +14,68 @@ st.set_page_config(
 )
 
 # =========================
-# MENSAJES DE PRUEBA
+# ESTILOS PERSONALIZADOS
 # =========================
-st.write("App cargó correctamente 🚀")
+st.markdown("""
+<style>
+.main {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.title-box {
+    text-align: center;
+    padding: 1rem 0 1.5rem 0;
+}
+.title-box h1 {
+    color: white;
+    margin-bottom: 0.4rem;
+}
+.title-box p {
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+.result-success {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    padding: 1rem;
+    border-radius: 14px;
+    color: #dcfce7;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+.result-danger {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 1rem;
+    border-radius: 14px;
+    color: #fee2e2;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+.prob-box {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.30);
+    padding: 0.9rem;
+    border-radius: 12px;
+    color: #dbeafe;
+    text-align: center;
+    margin-top: 0.8rem;
+}
+.note-box {
+    background: rgba(255,255,255,0.05);
+    padding: 0.9rem;
+    border-radius: 12px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    margin-top: 1.2rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # =========================
 # CARGA DEL MODELO
@@ -24,15 +83,7 @@ st.write("App cargó correctamente 🚀")
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR.parent / "models" / "diabetes_model.pkl"
 
-st.write("Ruta del modelo:", MODEL_PATH)
-st.write("¿Existe el modelo?", MODEL_PATH.exists())
-
-if MODEL_PATH.exists():
-    model = joblib.load(MODEL_PATH)
-    st.success("Modelo cargado correctamente ✅")
-else:
-    st.error("No se encontró el modelo. Revisa la ruta y el archivo diabetes_model.pkl")
-    st.stop()
+model = joblib.load(MODEL_PATH)
 
 # =========================
 # FUNCIÓN PARA DATOS ALEATORIOS
@@ -67,10 +118,12 @@ if "form_data" not in st.session_state:
 # =========================
 # ENCABEZADO
 # =========================
-st.title("Predicción de Diabetes 🩺")
-st.write(
-    "Ingresa los datos clínicos del paciente para estimar el riesgo de diabetes usando un modelo XGBoost."
-)
+st.markdown("""
+<div class="title-box">
+    <h1>Predicción de Diabetes 🩺</h1>
+    <p>Ingresa los datos clínicos del paciente para estimar el riesgo de diabetes usando un modelo XGBoost.</p>
+</div>
+""", unsafe_allow_html=True)
 
 # =========================
 # BOTÓN DE DATOS ALEATORIOS
@@ -190,15 +243,26 @@ if st.button("Predecir", use_container_width=True):
     st.subheader("Resultado del análisis")
 
     if prediction == 1:
-        st.error("⚠️ Riesgo de diabetes detectado")
+        st.markdown(
+            '<div class="result-danger">⚠️ Riesgo de diabetes detectado</div>',
+            unsafe_allow_html=True
+        )
     else:
-        st.success("✅ No se detecta diabetes")
+        st.markdown(
+            '<div class="result-success">✅ No se detecta diabetes</div>',
+            unsafe_allow_html=True
+        )
 
-    st.info(f"Probabilidad estimada de diabetes: {probability:.2%}")
+    st.markdown(
+        f'<div class="prob-box">Probabilidad estimada de diabetes: <strong>{probability:.2%}</strong></div>',
+        unsafe_allow_html=True
+    )
 
 # =========================
 # NOTA FINAL
 # =========================
-st.caption(
-    "Este modelo no garantiza el 100% de predicción real. Esta herramienta tiene fines educativos y no reemplaza una evaluación médica profesional."
-)
+st.markdown("""
+<div class="note-box">
+Este modelo no garantiza el 100% de predicción real. Esta herramienta tiene fines educativos y no reemplaza una evaluación médica profesional.
+</div>
+""", unsafe_allow_html=True)
