@@ -1,7 +1,3 @@
-from utils import db_connect
-engine = db_connect()
-
-# your code here
 import streamlit as st
 from pathlib import Path
 import joblib
