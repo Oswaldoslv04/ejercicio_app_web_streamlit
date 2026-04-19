@@ -3,7 +3,7 @@
 Aplicación web interactiva desarrollada con Streamlit para estimar el riesgo de diabetes a partir de variables clínicas, utilizando un modelo de Machine Learning entrenado con XGBoost.
 
 ## Aplicación desplegada en Render
-
+https://ejercicio-app-web-streamlit.onrender.com
 
 ## Tecnologías utilizadas
 - Python
